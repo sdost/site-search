@@ -77,10 +77,15 @@ func main() {
 	var maxConcurrency int
 	flag.IntVar(&maxConcurrency, "c", 20, "Maximum concurrency.")
 	var urlFilePath string
-	flag.StringVar(&urlFilePath, "i", "url.txt", "Path to URL list file.")
+	flag.StringVar(&urlFilePath, "i", "", "Path to URL list file.")
 	var resultsFilePath string
 	flag.StringVar(&resultsFilePath, "o", "results.txt", "Path to results file.")
 	flag.Parse()
+
+	if term == "" || urlFilePath == "" {
+		flag.Usage()
+		os.Exit(1)
+	}
 
 	csvfile, err := os.Open(urlFilePath)
 	if err != nil {
